@@ -45,7 +45,7 @@ func NewProcessGroup(ctx context.Context) *ProcessGroup {
 			defer pg.lock.Unlock()
 			ctxCancel()
 			pg.cancelReason = reason
-			pg.done = true
+			pg.closed = true
 		})
 	}
 
@@ -69,7 +69,7 @@ func (pg *ProcessGroup) Go(f func(context.Context)) error {
 	pg.lock.Lock()
 	defer pg.lock.Unlock()
 
-	if pg.done {
+	if pg.closed {
 		return &ErrAlreadyClosed{
 			Reason: pg.cancelReason,
 		}
@@ -103,5 +103,6 @@ func (pg *ProcessGroup) Wait(ctx context.Context) {
 
 func (pg *ProcessGroup) Close(ctx context.Context) error {
 	pg.cancel(&ReasonClosed{})
-	return pg.Wait()
+	pg.Wait(ctx)
+	return nil
 }
