@@ -1,1 +1,1 @@
-module github.com/andrewchambers/sgo
+module github.com/andrewchambers/sgo/v2
