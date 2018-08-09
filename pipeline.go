@@ -32,7 +32,7 @@ func NewOrderedPipeline(bufferSize, concurrency int) *OrderedPipeline {
 	}
 
 	if concurrency <= 0 {
-		panic("bad concurrency size")
+		panic("bad concurrency")
 	}
 
 	p := &OrderedPipeline{
