@@ -4,7 +4,7 @@ import (
 	"sync"
 )
 
-// An ordered pipeline where work in performed with limited update docs, but results are
+// An ordered pipeline where work in performed with limited concurrency, but results are
 // are collected in the same order they are scheduled.
 type OrderedPipeline struct {
 	input        chan orderedPipelineTask
@@ -119,7 +119,7 @@ func (p *OrderedPipeline) Close() {
 }
 
 
-// A pipeline where work in performed with limited update docs, and results are
+// A pipeline where work in performed with limited concurrency, and results are
 // collected in the order they are ready.
 type Pipeline struct {
 	input        chan pipelineTask
